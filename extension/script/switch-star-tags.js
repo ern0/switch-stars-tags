@@ -115,19 +115,28 @@ function decorate_item_us()
 
 function decorate_list_dd()
 {
-	elms = document.getElementsByClassName("name");
+	var elms = document.getElementsByClassName("name");
 	for (var index = 0; index < elms.length; index++) {
+		var elm = elms[index];
 
-		var elm = elms[index].parentElement.parentElement;
-		text = elm.innerHTML;
+		var outer_elm;
+		var link_elm;
+		if (elm.classList.value.includes("mb-1")) {
+			outer_elm = elm;
+			link_elm = elm.firstElementChild;
+		} else {
+			outer_elm = elm.parentElement.parentElement;
+			link_elm = elm.parentElement;
+		}
+		var text = outer_elm.innerHTML;
 
-		var game = parse_game_name(site, elms[index].parentElement.href);
+		var game = parse_game_name(site, link_elm.href);
 
 		text = text.replaceAll("<div","<span");
 		text = text.replaceAll("</div>","</span>");
 		text = text.replaceAll("</a>", "</a><div>" + render_decoration(game) + "</div>");
 		
-		elm.innerHTML = text;
+		outer_elm.innerHTML = text;
 	}
 
 }
@@ -165,31 +174,40 @@ function render_decoration(game)
 		}
 	}
 
-	r += render_link("#", "review");
 
+	var url = "https://www.google.com/search?q=nintendo+switch+review+";
+	url += game.replaceAll("_", "+");
+	r += render_link(url, "Google");
+
+	r += render_space();
+
+	var url = "https://www.youtube.com/results?search_query=nintendo+switch+review+";
+	url += game.replaceAll("_", "+");
+	r += render_link(url, "YouTube");
+	
 	return r;
 }
 
 function render_tag(tag)
 {
 	style = "";
-	style
 	if (tag == "asset_flip") {
-		style = "background: #ff0000; color: #ffff55;";
+		style = "background: #444444; color: #ff6666;";
 	} else {
 		style = "background: #eeeeee; color: #000000;";
 	}
 
-	r = "<span class='badge' style='" + style + " ";
-	r += "border: 1px solid gray;";
-	r += "'>#" + tag + "</span>";
+	r = "<span";
+	if (site == "dd") r += " class='badge'";
+	r += " style='" + style + " border: 1px solid gray;'";
+	r += ">#" + tag + "</span>";
 
 	return r + render_space();
 }
 
 function render_link(url, title)
 {
-	r = "<a href='#URL#'>#TITLE#</a>"
+	r = "<a href='#URL#' target='review'>#TITLE#&raquo;</a>"
 
 	r = r.replaceAll("#URL#", url);
 	r = r.replaceAll("#TITLE#", title);
