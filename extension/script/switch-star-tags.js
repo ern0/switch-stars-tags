@@ -1,29 +1,45 @@
+tags = {
+	"the_bullet_time_of_revenge": "asset_flip"
+}
+
 function init_extension()
 {
 	site = detect_site(window.location.href);
+
 	if (site == "us") {
 		last_url = "";
-		watch_page_us();
+		watch_page();
+
 	} else {
 		init_page();
+
 	}
 }
 
-function watch_page_us()
+function watch_page()
 {
 	if (last_url != window.location.href) {
 		last_url = window.location.href;
 		init_page();
 	}
 
-	setTimeout(watch_page_us, 400);
+	setTimeout(watch_page, 400);
 }
 
 function init_page()
 {
 	page = detect_page(site);
 
-	console.log("site: ", site, "page:", page);
+	if (page == "item") {
+		if (site == "dd") decorate_item_dd();
+		if (site == "uk") decorate_item_uk();
+		if (site == "us") decorate_item_us();
+	}
+
+	if (site == "dd") decorate_list_dd();
+	if (site == "uk") decorate_list_uk();
+	if (site == "us") decorate_liat_us();
+
 }
 
 function detect_site(url)
@@ -63,7 +79,6 @@ function detect_page_dd()
 	return (second == "items" ? "item" : "list");
 }
 
-
 function detect_page_uk()
 {
 	var second = window.location.href.split("/")[3].toLocaleLowerCase();
@@ -76,6 +91,110 @@ function detect_page_us()
 	return (second == "products" ? "item" : "list");
 }
 
+function decorate_item_dd()
+{
+	var elm = document.getElementsByTagName("h2")[0];
+	if (typeof(elm) == "undefined") return;
+	text = elm.innerHTML;
+
+	var game = parse_game_name(site, window.location.href);
+	text = text.replaceAll("</span>", "</span><div>" + render_decoration(game) + "</div>");
+
+	elm.innerHTML = text;
+}
+
+function decorate_item_uk()
+{
+
+}
+
+function decorate_item_us()
+{
+
+}
+
+function decorate_list_dd()
+{
+	elms = document.getElementsByClassName("name");
+	for (var index = 0; index < elms.length; index++) {
+
+		var elm = elms[index].parentElement.parentElement;
+		text = elm.innerHTML;
+
+		var game = parse_game_name(site, elms[index].parentElement.href);
+
+		text = text.replaceAll("<div","<span");
+		text = text.replaceAll("</div>","</span>");
+		text = text.replaceAll("</a>", "</a><div>" + render_decoration(game) + "</div>");
+		
+		elm.innerHTML = text;
+	}
+
+}
+
+function decorate_list_uk()
+{
+
+}
+
+function decorate_list_us()
+{
+
+}
+
+function render_newline()
+{
+	return "<br />";
+}
+
+function render_space() 
+{
+	return "&nbsp;";
+}
+
+function render_decoration(game) 
+{
+	r = "";
+
+	if (game in tags) {
+		var tag_list = tags[game].split(" ");
+		for (var tag_index in tag_list) {
+			var tag = tag_list[tag_index];
+			if (tag == "") continue;
+			r += render_tag(tag);
+		}
+	}
+
+	r += render_link("#", "review");
+
+	return r;
+}
+
+function render_tag(tag)
+{
+	style = "";
+	style
+	if (tag == "asset_flip") {
+		style = "background: #ff0000; color: #ffff55;";
+	} else {
+		style = "background: #eeeeee; color: #000000;";
+	}
+
+	r = "<span class='badge' style='" + style + " ";
+	r += "border: 1px solid gray;";
+	r += "'>#" + tag + "</span>";
+
+	return r + render_space();
+}
+
+function render_link(url, title)
+{
+	r = "<a href='#URL#'>#TITLE#</a>"
+
+	r = r.replaceAll("#URL#", url);
+	r = r.replaceAll("#TITLE#", title);
+	return r;
+}
 
 if (typeof (document) == "object") {
 	init_extension();
