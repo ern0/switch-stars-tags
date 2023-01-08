@@ -94,11 +94,13 @@ function detect_page_us()
 function decorate_item_dd()
 {
 	var elm = document.getElementsByTagName("h2")[0];
-	if (typeof(elm) == "undefined") return;
+	if ((typeof elm) == "undefined") return;
 	text = elm.innerHTML;
 
 	var game = parse_game_name(site, window.location.href);
-	text = text.replaceAll("</span>", "</span><div>" + render_decoration(game) + "</div>");
+	var decor = render_decoration(game);
+
+	text = text.replaceAll("</span>", "</span><div>" + decor + "</div>");
 
 	elm.innerHTML = text;
 }
@@ -116,6 +118,8 @@ function decorate_item_us()
 function decorate_list_dd()
 {
 	var elms = document.getElementsByClassName("name");
+	if ((typeof elms) == "undefined") return;
+
 	for (var index = 0; index < elms.length; index++) {
 		var elm = elms[index];
 
@@ -131,11 +135,12 @@ function decorate_list_dd()
 		var text = outer_elm.innerHTML;
 
 		var game = parse_game_name(site, link_elm.href);
+		var decor = render_decoration(game);
 
-		text = text.replaceAll("<div","<span");
-		text = text.replaceAll("</div>","</span>");
-		text = text.replaceAll("</a>", "</a><div>" + render_decoration(game) + "</div>");
-		
+		text = text.replaceAll("<div", "<span");
+		text = text.replaceAll("</div>", "</span>");
+		text = text.replaceAll("</a>", "</a><div>" + decor + "</div>");
+
 		outer_elm.innerHTML = text;
 	}
 
@@ -161,30 +166,72 @@ function render_space()
 	return "&nbsp;";
 }
 
+function render_attr(attr, value)
+{
+	return " " + attr + "='" + value + "'";
+}
+
+function render_link(url, title)
+{
+	r = "<a"
+	r += render_attr("href", url);
+	r += render_attr("target", "review");
+	r += ">" + title + "&raquo;</a>"
+
+	return r;
+}
+
 function render_decoration(game) 
+{
+	r = "";
+
+	r += render_decor_taglist(game);
+	r += render_decor_google_search(game);
+	r += render_space();
+	r += render_decor_youtube_search(game);
+
+	return r;
+}
+
+function render_decor_taglist(game)
 {
 	r = "";
 
 	if (game in tags) {
 		var tag_list = tags[game].split(" ");
+
 		for (var tag_index in tag_list) {
 			var tag = tag_list[tag_index];
 			if (tag == "") continue;
 			r += render_tag(tag);
 		}
+
 	}
 
+	return r;
+}
 
-	var url = "https://www.google.com/search?q=nintendo+switch+review+";
+function render_decor_google_search(game)
+{
+	var url = "https://www.google.com/";
+	url += "search?q=";
+	url += "nintendo+switch+review+";
+
 	url += game.replaceAll("_", "+");
-	r += render_link(url, "Google");
+	r = render_link(url, "Google");
 
-	r += render_space();
+	return r;
+}
 
-	var url = "https://www.youtube.com/results?search_query=nintendo+switch+review+";
+function render_decor_youtube_search(game)
+{
+	var url = "https://www.youtube.com/";
+	url += "results?search_query=";
+	url += "nintendo+switch+review+";
+
 	url += game.replaceAll("_", "+");
-	r += render_link(url, "YouTube");
-	
+	r = render_link(url, "YouTube");
+
 	return r;
 }
 
@@ -192,29 +239,21 @@ function render_tag(tag)
 {
 	style = "";
 	if (tag == "asset_flip") {
-		style = "background: #444444; color: #ff6666;";
+		style = "background: #990000; color: #ffff99;";
 	} else {
 		style = "background: #eeeeee; color: #000000;";
 	}
 
 	r = "<span";
-	if (site == "dd") r += " class='badge'";
-	r += " style='" + style + " border: 1px solid gray;'";
+	if (site == "dd") r += render_attr("class", "badge");
+	r += render_attr("style", "border: 1px solid gray");
 	r += ">#" + tag + "</span>";
 
 	return r + render_space();
 }
 
-function render_link(url, title)
-{
-	r = "<a href='#URL#' target='review'>#TITLE#&raquo;</a>"
 
-	r = r.replaceAll("#URL#", url);
-	r = r.replaceAll("#TITLE#", title);
-	return r;
-}
-
-if (typeof (document) == "object") {
+if ((typeof document) == "object") {
 	init_extension();
 } else {
 	module.exports = { parse_game_name, detect_site };
