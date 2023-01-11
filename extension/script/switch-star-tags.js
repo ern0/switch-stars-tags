@@ -1,19 +1,151 @@
 tags = {
-	"the_bullet_time_of_revenge": "asset_flip"
-}
-
-function init_extension()
-{
-	site = detect_site(window.location.href);
-
-	if (site == "us") {
-		last_url = "";
-		watch_page();
-
-	} else {
-		init_page();
-
-	}
+  "ace_invaders":"asset_flip",
+  "ace_strike":"asset_flip",
+  "america_wild_hunting":"asset_flip",
+  "among_pipes":"asset_flip",
+  "animal_pals_bubble_pop":"asset_flip",
+  "arcanoid_breakout":"asset_flip",
+  "archery_blast":"asset_flip",
+  "archery_blast":"asset_flip",
+  "pinball_frenzy":"asset_flip",
+  "ball_physics_draw_puzzles":"asset_flip",
+  "basketball_pinball":"asset_flip",
+  "beat_them_all":"asset_flip",
+  "block_puzzle":"asset_flip",
+  "blocky_puzzle":"asset_flip",
+  "blow_up_monsters":"asset_flip",
+  "bocce":"asset_flip",
+  "bounce_mania":"asset_flip",
+  "bounce_mania":"asset_flip",
+  "bring_honey_home":"asset_flip",
+  "bubble_bubble_ocean":"asset_flip",
+  "bubble_bubble_ocean":"asset_flip",
+  "bullet_trail":"asset_flip",
+  "burger_master":"asset_flip",
+  "caesar_empire_war":"asset_flip",
+  "caesar_empire_war":"asset_flip",
+  "candy_match_kiddies":"asset_flip",
+  "candy_match_kiddies":"asset_flip",
+  "cannon_army":"asset_flip",
+  "castle_heroes":"asset_flip",
+  "checkers_master":"asset_flip",
+  "checkers_master":"asset_flip",
+  "chef_word_ardee":"asset_flip",
+  "classic_checkers":"asset_flip",
+  "classic_pool":"asset_flip",
+  "clay_skeet_shooting":"asset_flip",
+  "color_dots_connect":"asset_flip",
+  "colorfall":"asset_flip",
+  "connect_it":"asset_flip",
+  "curling":"asset_flip",
+  "curve_racer":"asset_flip",
+  "defend_the_kingdom":"asset_flip",
+  "colors_and_numbers":"asset_flip",
+  "dirt_bike_retro":"asset_flip",
+  "dogfight":"asset_flip",
+  "dungeon_bricker":"asset_flip",
+  "dynos_and_ghosts":"asset_flip",
+  "easy_flight_simulator":"asset_flip",
+  "eat_your_letters":"asset_flip",
+  "egg_up":"asset_flip",
+  "empire_invasion":"asset_flip",
+  "escape_route":"asset_flip",
+  "fantasy_cards":"asset_flip",
+  "find_10_differences":"asset_flip",
+  "fire_and_water":"asset_flip",
+  "fly_the_bird":"asset_flip",
+  "free_throw_basketball":"asset_flip",
+  "froggy_crossing":"asset_flip",
+  "galactic_trooper_armada":"asset_flip",
+  "gem_miner":"asset_flip",
+  "golf_royale":"asset_flip",
+  "gorilla_big_adventure":"asset_flip",
+  "grand_prix_racing":"asset_flip",
+  "grand_slam_tennis":"asset_flip",
+  "hammer_2_reloaded":"asset_flip",
+  "head_games":"asset_flip",
+  "heroic_pirates":"asset_flip",
+  "hungry_ball_physics":"asset_flip",
+  "hunter_shooting_camp":"asset_flip",
+  "insert_before_flight":"asset_flip",
+  "jumping_helix_ball":"asset_flip",
+  "jumping_quest":"asset_flip",
+  "jumping_stack_ball":"asset_flip",
+  "knight_with_tactics":"asset_flip",
+  "league_of_champions_soccer":"asset_flip",
+  "let_it_roll_2_slide_puzzles":"asset_flip",
+  "let_it_roll_slide_puzzle":"asset_flip",
+  "links_puzzle":"asset_flip",
+  "little_squires_quests":"asset_flip",
+  "logscape_puzzle_game":"asset_flip",
+  "magic_pen_color_book":"asset_flip",
+  "magical_maze":"asset_flip",
+  "mahjong_masters":"asset_flip",
+  "mania_fish":"asset_flip",
+  "max_reloaded_ii":"asset_flip",
+  "maze_with_cube":"asset_flip",
+  "metal_commando":"asset_flip",
+  "mini_car_racing":"asset_flip",
+  "monster_rescue":"asset_flip",
+  "mountain_bike_hill_climb_race_real_2d_arcade_dirt_racing_games":"asset_flip",
+  "my_little_fast_food_booth":"asset_flip",
+  "my_little_fruit_juice_booth":"asset_flip",
+  "my_little_icecream_booth":"asset_flip",
+  "ninja_buddy_epic_quest":"asset_flip",
+  "ninja_epic_adventure":"asset_flip",
+  "offroad_mini_racing":"asset_flip",
+  "olympic_basketball":"asset_flip",
+  "olympic_boxing":"asset_flip",
+  "olympic_table_tennis":"asset_flip",
+  "park_inc":"asset_flip",
+  "party_games_15_in_1":"asset_flip",
+  "pinball_big_splash":"asset_flip",
+  "pirate_treasure_island_of_mazes":"asset_flip",
+  "pix_jungle_adventures":"asset_flip",
+  "pixel_head_soccer":"asset_flip",
+  "pixel_jumper":"asset_flip",
+  "pop_blocks":"asset_flip",
+  "pop_the_bubbles":"asset_flip",
+  "puzzle_box_3_in_1":"asset_flip",
+  "puzzle_pipes":"asset_flip",
+  "puzzle_plowing_a_field":"asset_flip",
+  "pyramids_slot_machines":"asset_flip",
+  "ragdoll_fighter":"asset_flip",
+  "rally_road_crashy_car_racing":"asset_flip",
+  "red_ball_escape":"asset_flip",
+  "retro_fighter_dragons_revenge":"asset_flip",
+  "shadow_samurai_revenge":"asset_flip",
+  "shark_adventure":"asset_flip",
+  "skittles":"asset_flip",
+  "solitaire_card_games":"asset_flip",
+  "space_aliens_invaders":"asset_flip",
+  "space_wars":"asset_flip",
+  "strike_daz_cans":"asset_flip",
+  "sudoku_master":"asset_flip",
+  "super_disc_soccer":"asset_flip",
+  "super_punch":"asset_flip",
+  "super_shape_shooter":"asset_flip",
+  "sweet_sugar_candy":"asset_flip",
+  "sweets_swap":"asset_flip",
+  "table_soccer_foosball":"asset_flip",
+  "tank_battle_retro":"asset_flip",
+  "team_troopers":"asset_flip",
+  "the_bullet_time_of_revenge":"asset_flip",
+  "titans_black_ops":"asset_flip",
+  "top_down_racer":"asset_flip",
+  "top_gun_air_combat":"asset_flip",
+  "trigonal":"asset_flip",
+  "turbo_skiddy_racing":"asset_flip",
+  "urban_street_fighting":"asset_flip",
+  "us_navy_sea_conflict":"asset_flip",
+  "wacky_run":"asset_flip",
+  "wood_block_escape_puzzles":"asset_flip",
+  "wood_block_escape_puzzles_2":"asset_flip",
+  "wood_block_escape_puzzles_3":"asset_flip",
+  "word_crush_hidden":"asset_flip",
+  "zodiac_tri_peaks_solitaire":"asset_flip",
+  "zombie_apocalypse":"asset_flip",
+  "zombie_raid":"asset_flip"
 }
 
 function watch_page()
@@ -54,13 +186,14 @@ function detect_site(url)
 function parse_game_name(site, url)
 {
 	if (url.slice(-1) == "/") url = url.slice(0, -1);
-	var lastSlashPos = url.lastIndexOf("/") + 1;
-	var name = "n.a.";
+	let lastSlashPos = url.lastIndexOf("/") + 1;
+	let name = "n.a.";
 
 	if (site == "dd") name = url.slice(lastSlashPos);
 	if (site == "uk") name = url.slice(lastSlashPos, url.lastIndexOf("-"));
 	if (site == "us") name = url.slice(lastSlashPos);
 
+	console.log(name);
 	return name.toLowerCase().replaceAll("-", "_");
 }
 
@@ -75,30 +208,30 @@ function detect_page(site)
 
 function detect_page_dd() 
 {
-	var second = window.location.href.split("/")[3];
+	let second = window.location.href.split("/")[3];
 	return (second == "items" ? "item" : "list");
 }
 
 function detect_page_uk()
 {
-	var second = window.location.href.split("/")[3].toLocaleLowerCase();
+	let second = window.location.href.split("/")[3].toLocaleLowerCase();
 	return (second == "games" ? "item" : "list");
 }
 
 function detect_page_us()
 {
-	var second = window.location.href.split("/")[4].toLocaleLowerCase();
+	let second = window.location.href.split("/")[4].toLocaleLowerCase();
 	return (second == "products" ? "item" : "list");
 }
 
 function decorate_item_dd()
 {
-	var elm = document.getElementsByTagName("h2")[0];
+	let elm = document.getElementsByTagName("h2")[0];
 	if ((typeof elm) == "undefined") return;
 	text = elm.innerHTML;
 
-	var game = parse_game_name(site, window.location.href);
-	var decor = render_decoration(game);
+	let game = parse_game_name(site, window.location.href);
+	let decor = render_decoration(game);
 
 	text = text.replaceAll("</span>", "</span><div>" + decor + "</div>");
 
@@ -117,14 +250,14 @@ function decorate_item_us()
 
 function decorate_list_dd()
 {
-	var elms = document.getElementsByClassName("name");
+	let elms = document.getElementsByClassName("name");
 	if ((typeof elms) == "undefined") return;
 
-	for (var index = 0; index < elms.length; index++) {
-		var elm = elms[index];
+	for (let index = 0; index < elms.length; index++) {
+		let elm = elms[index];
 
-		var outer_elm;
-		var link_elm;
+		let outer_elm;
+		let link_elm;
 		if (elm.classList.value.includes("mb-1")) {
 			outer_elm = elm;
 			link_elm = elm.firstElementChild;
@@ -132,10 +265,10 @@ function decorate_list_dd()
 			outer_elm = elm.parentElement.parentElement;
 			link_elm = elm.parentElement;
 		}
-		var text = outer_elm.innerHTML;
+		let text = outer_elm.innerHTML;
 
-		var game = parse_game_name(site, link_elm.href);
-		var decor = render_decoration(game);
+		let game = parse_game_name(site, link_elm.href);
+		let decor = render_decoration(game);
 
 		text = text.replaceAll("<div", "<span");
 		text = text.replaceAll("</div>", "</span>");
@@ -198,10 +331,10 @@ function render_decor_taglist(game)
 	r = "";
 
 	if (game in tags) {
-		var tag_list = tags[game].split(" ");
+		let tag_list = tags[game].split(" ");
 
-		for (var tag_index in tag_list) {
-			var tag = tag_list[tag_index];
+		for (let tag_index in tag_list) {
+			let tag = tag_list[tag_index];
 			if (tag == "") continue;
 			r += render_tag(tag);
 		}
@@ -213,7 +346,7 @@ function render_decor_taglist(game)
 
 function render_decor_google_search(game)
 {
-	var url = "https://www.google.com/";
+	let url = "https://www.google.com/";
 	url += "search?q=";
 	url += "nintendo+switch+review+";
 
@@ -225,7 +358,7 @@ function render_decor_google_search(game)
 
 function render_decor_youtube_search(game)
 {
-	var url = "https://www.youtube.com/";
+	let url = "https://www.youtube.com/";
 	url += "results?search_query=";
 	url += "nintendo+switch+review+";
 
@@ -237,16 +370,14 @@ function render_decor_youtube_search(game)
 
 function render_tag(tag)
 {
-	style = "";
+	let style = "background: #eeeeee; color: #000000;";
 	if (tag == "asset_flip") {
 		style = "background: #990000; color: #ffff99;";
-	} else {
-		style = "background: #eeeeee; color: #000000;";
 	}
 
 	r = "<span";
 	if (site == "dd") r += render_attr("class", "badge");
-	r += render_attr("style", "border: 1px solid gray");
+	r += render_attr("style", style);
 	r += ">#" + tag + "</span>";
 
 	return r + render_space();
