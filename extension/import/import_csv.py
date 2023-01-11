@@ -165,13 +165,15 @@ class Importer:
             assert(line)
             line = line.strip()
             
-            if line == "}":
+            if line.startswith("}"):
                 break
     
     def write_lines(self):
         
         for line in self.lines:
             self.tmp.write(line + "\n")
+        
+        self.tmp.write("}\n")
             
     def copy_rest(self):
         
