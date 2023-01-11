@@ -79,7 +79,7 @@ class Importer:
                 continue
 
             if tags != "":
-                tags += ","
+                tags += " "
             tags += self.tag_names[index]
 
         return tags

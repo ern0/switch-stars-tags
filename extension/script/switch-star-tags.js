@@ -105,7 +105,7 @@ tags = {
   "pixel_head_soccer":"asset_flip",
   "pixel_jumper":"asset_flip",
   "pop_blocks":"asset_flip",
-  "pop_the_bubbles":"asset_flip",
+  "pop_the_bubbles":"asset_flip bad_game",
   "puzzle_box_3_in_1":"asset_flip",
   "puzzle_pipes":"asset_flip",
   "puzzle_plowing_a_field":"asset_flip",
@@ -148,6 +148,19 @@ tags = {
   "zombie_raid":"asset_flip"
 }
 
+function init_extension()
+{
+	site = detect_site(window.location.href);
+
+	if (site == "us") {
+		last_url = "";
+		watch_page();
+
+	} else {
+		init_page();
+
+	}
+}
 function watch_page()
 {
 	if (last_url != window.location.href) {
@@ -193,7 +206,6 @@ function parse_game_name(site, url)
 	if (site == "uk") name = url.slice(lastSlashPos, url.lastIndexOf("-"));
 	if (site == "us") name = url.slice(lastSlashPos);
 
-	console.log(name);
 	return name.toLowerCase().replaceAll("-", "_");
 }
 
@@ -226,8 +238,9 @@ function detect_page_us()
 
 function decorate_item_dd()
 {
-	let elm = document.getElementsByTagName("h2")[0];
-	if ((typeof elm) == "undefined") return;
+	let elms = document.getElementsByTagName("h2");
+	if ((typeof elms) == "undefined") return;
+  elm = elms[0];
 	text = elm.innerHTML;
 
 	let game = parse_game_name(site, window.location.href);
@@ -240,7 +253,20 @@ function decorate_item_dd()
 
 function decorate_item_uk()
 {
+  let elms = document.getElementsByTagName("h1")
+	if ((typeof elms) == "undefined") return;
+  let elm = elms[0];
+	let text = elm.innerHTML;
 
+	let game = parse_game_name(site, window.location.href);
+	let decor = render_decoration(game);
+
+  text += render_newline();
+  text += "<span";
+  text += render_attr("style", "font-size: 17px");
+  text += ">" + decor + "</style>";
+
+	elm.innerHTML = text;
 }
 
 function decorate_item_us()
@@ -281,7 +307,7 @@ function decorate_list_dd()
 
 function decorate_list_uk()
 {
-
+ // span.page-title-text
 }
 
 function decorate_list_us()
@@ -306,10 +332,17 @@ function render_attr(attr, value)
 
 function render_link(url, title)
 {
-	r = "<a"
+	let r = "<a"
+
+  if (site == "uk" && page == "item") {
+    r += render_attr("style", "color: #dddddd;");
+  }
+
 	r += render_attr("href", url);
 	r += render_attr("target", "review");
-	r += ">" + title + "&raquo;</a>"
+	r += ">" + title + "&raquo;</a>";
+
+  if (site == "uk") r += render_space();
 
 	return r;
 }
@@ -337,6 +370,8 @@ function render_decor_taglist(game)
 			let tag = tag_list[tag_index];
 			if (tag == "") continue;
 			r += render_tag(tag);
+
+      if (site == "uk") r += render_space();
 		}
 
 	}
@@ -372,13 +407,23 @@ function render_tag(tag)
 {
 	let style = "background: #eeeeee; color: #000000;";
 	if (tag == "asset_flip") {
-		style = "background: #990000; color: #ffff99;";
+    if (site == "uk" && page == "item") {
+		  style = "background: #ffff99; color: #990000;";
+    } else {
+		  style = "background: #990000; color: #ffff99;";
+    }
 	}
+ 
+  tag = "#" + tag;
+
+  if (site == "uk") {
+    tag = "&nbsp;" + tag + "&nbsp";
+  }
 
 	r = "<span";
 	if (site == "dd") r += render_attr("class", "badge");
 	r += render_attr("style", style);
-	r += ">#" + tag + "</span>";
+	r += ">" + tag + "</span>";
 
 	return r + render_space();
 }
