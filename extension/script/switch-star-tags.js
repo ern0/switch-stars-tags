@@ -198,6 +198,7 @@ function detect_site(url)
 
 function parse_game_name(site, url)
 {
+  if ((typeof url) == "undefined") return "n.a.";
 	if (url.slice(-1) == "/") url = url.slice(0, -1);
 	let lastSlashPos = url.lastIndexOf("/") + 1;
 	let name = "n.a.";
@@ -307,7 +308,66 @@ function decorate_list_dd()
 
 function decorate_list_uk()
 {
- // span.page-title-text
+  decorate_list_uk_wait(-1, 0);
+}
+
+function decorate_list_uk_wait(last_count, attempt) {
+
+  if (attempt > 99) return;
+
+  let elms = document.getElementsByClassName("page-title-text");
+
+  if ((typeof elms) == "undefined") {
+    setTimeout(function() { decorate_list_uk_wait(-1, 0) }, 100);
+    return;
+  }
+  if (elms.length == 0) {
+    setTimeout(function() { decorate_list_uk_wait(0, 0) }, 100);
+    return;
+  }
+  if (elms.length == 1) {
+    let empty_elm = document.getElementsByClassName("results-empty");
+    if (empty_elm.offsetParent == null) {
+      setTimeout(function() { decorate_list_uk_wait(1, attempt + 1) }, 100);
+    }
+    return;
+  }
+  if (elms.length != last_count) {
+    setTimeout(function() {
+      decorate_list_uk_wait(elms.length, attempt + 1);
+    }, 100);
+    return;    
+  }
+
+  decorate_list_uk_ready();
+}
+
+function decorate_list_uk_ready()
+{
+  let elms = document.getElementsByClassName("page-title-text");
+
+	for (let index = 0; index < elms.length; index++) {
+    let elm = elms[index];
+    let link_elm = elm.parentElement.parentElement.parentElement;
+		let text = elm.innerHTML;
+
+    let href = link_elm.href;
+    if ((typeof href) == "undefined") continue;
+
+    console.log(site, href);
+
+		let game = parse_game_name(site, href);
+		let decor = render_decoration(game);
+
+    text += render_newline();
+    text += "<span ";
+    text += render_attr("style", "font-size: 15px;");
+    text += ">";
+    text += decor;
+    text += "</span>";
+
+		elm.innerHTML = text;
+  }
 }
 
 function decorate_list_us()
@@ -334,8 +394,12 @@ function render_link(url, title)
 {
 	let r = "<a"
 
-  if (site == "uk" && page == "item") {
-    r += render_attr("style", "color: #dddddd;");
+  if (site == "uk") {
+    if (page == "item") {
+      r += render_attr("style", "color: #dddddd;");
+    } else {
+      r += render_attr("style", "color: #999999;");
+    }
   }
 
 	r += render_attr("href", url);

@@ -1,6 +1,6 @@
 { 
   "manifest_version": 3,
-  "name": "switch-star-tags",
+  "name": "switch-stars-tags",
   "version": "1.0",
   "description": "Display tags for Switch games on Nintendo shop and DekuDeals",
 
