@@ -1,4 +1,4 @@
-ext = require("../script/switch-star-tags.js");
+ext = require("../script/switch-stars-tags.js");
 setTimeout(run_tests, 1);
 
 function run_tests()

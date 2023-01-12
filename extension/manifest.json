@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "switch-stars-tags",
   "version": "1.0",
-  "description": "Display tags for Switch games on Nintendo shop and DekuDeals",
+  "description": "Display tags for Switch games on Nintendo UK/US shop and DekuDeals",
 
   "icons": {
     "16": "image/icon-16.png",
@@ -23,7 +23,7 @@
         "https://www.nintendo.com/*"
       ],
       "js": [
-        "script/switch-star-tags.js"
+        "script/switch-stars-tags.js"
       ],
       "run_at": "document_idle",
       "all_frames": false
