@@ -308,34 +308,43 @@ function decorate_list_dd()
 
 function decorate_list_uk()
 {
-  decorate_list_uk_wait(-1, 0);
+  setTimeout(decorate_list_uk_prepare, 1000);
+}
+
+function decorate_list_uk_prepare() 
+{
+  console.log("prepare");
+
+  let elms = document.getElementsByClassName("page-title-text");
+
+  if ((typeof elms) == "undefined") {
+    setTimeout(decorate_list_uk_prepare, 100);
+    return;
+  }
+
+  decorate_list_uk_wait(elms.length, 0);
 }
 
 function decorate_list_uk_wait(last_count, attempt) {
+
+  console.log(last_count, attempt);
 
   if (attempt > 99) return;
 
   let elms = document.getElementsByClassName("page-title-text");
 
-  if ((typeof elms) == "undefined") {
-    setTimeout(function() { decorate_list_uk_wait(-1, 0) }, 100);
-    return;
-  }
   if (elms.length == 0) {
     setTimeout(function() { decorate_list_uk_wait(0, 0) }, 100);
     return;
   }
   if (elms.length == 1) {
-    let empty_elm = document.getElementsByClassName("results-empty");
-    if (empty_elm.offsetParent == null) {
-      setTimeout(function() { decorate_list_uk_wait(1, attempt + 1) }, 100);
-    }
+    setTimeout(function() { decorate_list_uk_wait(1, attempt + 1) }, 100);
     return;
   }
   if (elms.length != last_count) {
     setTimeout(function() {
       decorate_list_uk_wait(elms.length, attempt + 1);
-    }, 100);
+    }, 400);
     return;    
   }
 
@@ -354,9 +363,8 @@ function decorate_list_uk_ready()
     let href = link_elm.href;
     if ((typeof href) == "undefined") continue;
 
-    console.log(site, href);
-
 		let game = parse_game_name(site, href);
+    // TODO: filter out non-switch links
 		let decor = render_decoration(game);
 
     text += render_newline();
