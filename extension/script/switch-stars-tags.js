@@ -206,7 +206,7 @@ function parse_game_name(site, url)
 
 	if (site == "dd") name = url.slice(lastSlashPos);
 	if (site == "uk") name = url.slice(lastSlashPos, url.lastIndexOf("-"));
-	if (site == "us") name = url.slice(lastSlashPos);
+	if (site == "us") name = url.slice(lastSlashPos, url.lastIndexOf("-"));
 
 	return name.toLowerCase().replaceAll("-", "_");
 }
@@ -341,12 +341,62 @@ function detect_page_us()
 
 function decorate_item_us()
 {
+  let elms = document.getElementsByTagName("h1");
+  if ((typeof elms) == "undefined") return;
+  if (elms.length == 0) return;
+  let elm = elms[0];
 
+	let text = elm.innerHTML;
+	let game = parse_game_name(site, window.location.href);
+	let decor = render_decoration(game);
+
+  text += render_newline();
+  text += "<span";
+  text += render_attr("style", "font-size: 20px");
+  text += ">" + decor + "</style>";
+
+	elm.innerHTML = text;
 }
 
 function decorate_list_us()
 {
+  setTimeout(decorate_list_us, 1000);
 
+  let elms = document.getElementsByTagName("h3");
+  if ((typeof elms) == "undefined") return;
+  if (elms.length == 0) return;
+
+	for (let index = 0; index < elms.length; index++) {
+    let elm = elms[index];
+    if (elm.classList.value.includes("switch_stars_tags_was_here")) continue;
+    if (!elm.classList.value.toLowerCase().includes("title-")) continue;
+
+    let link_elm = elm.parentElement.parentElement.parentElement.parentElement;
+    let href = link_elm.href;
+    if ((typeof href) == "undefined") continue;
+
+  	let game = parse_game_name(site, href);
+		let decor = render_decoration(game);
+		let text = elm.innerHTML;
+
+    text += render_newline();
+    text += "<div";
+    text += render_attr("id", game);
+    
+    style = "font-size: 15px; text-decoration: underline;";
+    style += "overflow: visible;"
+    style += "text-overflow: clip;"
+    style += "white-space: normal;"
+    style += "overflow-wrap: break-word;"
+    
+    text += render_attr("style", style);
+    text += ">";
+    text += decor;
+    text += "</div>";
+
+    elm.classList.value += " switch_stars_tags_was_here";
+		elm.innerHTML = text;  
+  }
 }
 
 function render_newline()
@@ -373,6 +423,12 @@ function render_link(url, title)
       r += render_attr("style", "color: #dddddd;");
     } else {
       r += render_attr("style", "color: #999999;");
+    }
+  }
+
+  if (site == "us") {
+    if (page == "item") {
+      r += render_attr("style", "display: inline; color: #999999;");
     }
   }
 
@@ -454,7 +510,7 @@ function render_tag(tag)
  
   tag = "#" + tag;
 
-  if (site == "uk") {
+  if (site == "uk" || site == "us") {
     tag = "&nbsp;" + tag + "&nbsp";
   }
 

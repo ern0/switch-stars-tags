@@ -52,5 +52,5 @@ test_name_nintendo_us = () =>
     assert(site == "us");
 
     let name = ext.parse_game_name(site, url);
-    assert(name == "splatoon_3_switch");
+    assert(name == "splatoon_3");
 }
