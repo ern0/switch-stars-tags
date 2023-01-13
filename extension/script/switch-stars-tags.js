@@ -175,14 +175,17 @@ function init_page()
 {
 	page = detect_page(site);
 
+  console.log(page, site);
+
 	if (page == "item") {
 		if (site == "dd") decorate_item_dd();
 		if (site == "uk") decorate_item_uk();
 		if (site == "us") decorate_item_us();
   }
 
+  if (site == "dd") decorate_list_dd();
+
 	if (page == "list") {
-	  if (site == "dd") decorate_list_dd();
 	  if (site == "uk") decorate_list_uk();
 	  if (site == "us") decorate_list_us();
   }
@@ -436,7 +439,7 @@ function render_link(url, title)
 	r += render_attr("target", "review");
 	r += ">" + title + "&raquo;</a>";
 
-  if (site == "uk") r += render_space();
+  if (site == "uk" || site == "us") r += render_space();
 
 	return r;
 }
