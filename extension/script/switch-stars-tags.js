@@ -179,12 +179,13 @@ function init_page()
 		if (site == "dd") decorate_item_dd();
 		if (site == "uk") decorate_item_uk();
 		if (site == "us") decorate_item_us();
-	}
+  }
 
-	if (site == "dd") decorate_list_dd();
-	if (site == "uk") decorate_list_uk();
-	if (site == "us") decorate_liat_us();
-
+	if (page == "list") {
+	  if (site == "dd") decorate_list_dd();
+	  if (site == "uk") decorate_list_uk();
+	  if (site == "us") decorate_list_us();
+  }
 }
 
 function detect_site(url)
@@ -225,18 +226,6 @@ function detect_page_dd()
 	return (second == "items" ? "item" : "list");
 }
 
-function detect_page_uk()
-{
-	let second = window.location.href.split("/")[3].toLocaleLowerCase();
-	return (second == "games" ? "item" : "list");
-}
-
-function detect_page_us()
-{
-	let second = window.location.href.split("/")[4].toLocaleLowerCase();
-	return (second == "products" ? "item" : "list");
-}
-
 function decorate_item_dd()
 {
 	let elms = document.getElementsByTagName("h2");
@@ -250,29 +239,6 @@ function decorate_item_dd()
 	text = text.replaceAll("</span>", "</span><div>" + decor + "</div>");
 
 	elm.innerHTML = text;
-}
-
-function decorate_item_uk()
-{
-  let elms = document.getElementsByTagName("h1")
-	if ((typeof elms) == "undefined") return;
-  let elm = elms[0];
-	let text = elm.innerHTML;
-
-	let game = parse_game_name(site, window.location.href);
-	let decor = render_decoration(game);
-
-  text += render_newline();
-  text += "<span";
-  text += render_attr("style", "font-size: 17px");
-  text += ">" + decor + "</style>";
-
-	elm.innerHTML = text;
-}
-
-function decorate_item_us()
-{
-
 }
 
 function decorate_list_dd()
@@ -306,66 +272,54 @@ function decorate_list_dd()
 
 }
 
+function detect_page_uk()
+{
+	let second = window.location.href.split("/")[3].toLocaleLowerCase();
+	return (second == "games" ? "item" : "list");
+}
+
+function decorate_item_uk()
+{
+  let elms = document.getElementsByTagName("h1")
+	if ((typeof elms) == "undefined") return;
+  let elm = elms[0];
+	let text = elm.innerHTML;
+
+	let game = parse_game_name(site, window.location.href);
+	let decor = render_decoration(game);
+
+  text += render_newline();
+  text += "<span";
+  text += render_attr("style", "font-size: 17px");
+  text += ">" + decor + "</style>";
+
+	elm.innerHTML = text;
+}
+
 function decorate_list_uk()
 {
-  setTimeout(decorate_list_uk_prepare, 1000);
-}
-
-function decorate_list_uk_prepare() 
-{
-  console.log("prepare");
+  setTimeout(decorate_list_uk, 1000);
 
   let elms = document.getElementsByClassName("page-title-text");
-
-  if ((typeof elms) == "undefined") {
-    setTimeout(decorate_list_uk_prepare, 100);
-    return;
-  }
-
-  decorate_list_uk_wait(elms.length, 0);
-}
-
-function decorate_list_uk_wait(last_count, attempt) {
-
-  console.log(last_count, attempt);
-
-  if (attempt > 99) return;
-
-  let elms = document.getElementsByClassName("page-title-text");
-
-  if (elms.length == 0) {
-    setTimeout(function() { decorate_list_uk_wait(0, 0) }, 100);
-    return;
-  }
-  if (elms.length == 1) {
-    setTimeout(function() { decorate_list_uk_wait(1, attempt + 1) }, 100);
-    return;
-  }
-  if (elms.length != last_count) {
-    setTimeout(function() {
-      decorate_list_uk_wait(elms.length, attempt + 1);
-    }, 400);
-    return;    
-  }
-
-  decorate_list_uk_ready();
-}
-
-function decorate_list_uk_ready()
-{
-  let elms = document.getElementsByClassName("page-title-text");
+  if ((typeof elms) == "undefined") return;
+  if (elms.length == 0) return;
+  if (elms.length == 1) return;
 
 	for (let index = 0; index < elms.length; index++) {
     let elm = elms[index];
-    let link_elm = elm.parentElement.parentElement.parentElement;
-		let text = elm.innerHTML;
+    if (elm.classList.value.includes("switch_stars_tags_was_here")) continue;
 
+    let link_elm = elm.parentElement.parentElement.parentElement;
     let href = link_elm.href;
     if ((typeof href) == "undefined") continue;
 
+    let path = href.split("/");
+    if (path.length < 2) continue;
+    if (path[2].toLowerCase().includes("switch-download")) continue;
+
 		let game = parse_game_name(site, href);
-    // TODO: filter out non-switch links
 		let decor = render_decoration(game);
+		let text = elm.innerHTML;
 
     text += render_newline();
     text += "<span ";
@@ -374,8 +328,20 @@ function decorate_list_uk_ready()
     text += decor;
     text += "</span>";
 
+    elm.classList.value += " switch_stars_tags_was_here";
 		elm.innerHTML = text;
   }
+}
+
+function detect_page_us()
+{
+	let second = window.location.href.split("/")[4].toLocaleLowerCase();
+	return (second == "products" ? "item" : "list");
+}
+
+function decorate_item_us()
+{
+
 }
 
 function decorate_list_us()
