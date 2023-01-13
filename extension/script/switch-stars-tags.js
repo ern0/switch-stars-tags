@@ -383,11 +383,13 @@ function decorate_list_us()
     text += "<div";
     text += render_attr("id", game);
     
-    style = "font-size: 15px; text-decoration: underline;";
+    style = "font-size: 15px;"
+    //style += text-decoration: underline;";
     style += "overflow: visible;"
     style += "text-overflow: clip;"
     style += "white-space: normal;"
     style += "overflow-wrap: break-word;"
+    style += "position: absolute;"
     
     text += render_attr("style", style);
     text += ">";
@@ -427,9 +429,7 @@ function render_link(url, title)
   }
 
   if (site == "us") {
-    if (page == "item") {
       r += render_attr("style", "display: inline; color: #999999;");
-    }
   }
 
 	r += render_attr("href", url);
@@ -445,6 +445,7 @@ function render_decoration(game)
 {
 	r = "";
 
+  if (site == "us" && page == "list") r += "<pre></pre>";
 	r += render_decor_taglist(game);
 	r += render_decor_google_search(game);
 	r += render_space();
@@ -465,10 +466,12 @@ function render_decor_taglist(game)
 			if (tag == "") continue;
 			r += render_tag(tag);
 
-      if (site == "uk") r += render_space();
+      if (site == "uk" || site == "us") r += render_space();
 		}
 
 	}
+
+  if (r != "" && site == "us" && page == "list") r += "<pre></pre>";
 
 	return r;
 }
