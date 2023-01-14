@@ -175,8 +175,6 @@ function init_page()
 {
 	page = detect_page(site);
 
-  console.log(page, site);
-
 	if (page == "item") {
 		if (site == "dd") decorate_item_dd();
 		if (site == "uk") decorate_item_uk();
@@ -237,7 +235,7 @@ function decorate_item_dd()
 	text = elm.innerHTML;
 
 	let game = parse_game_name(site, window.location.href);
-	let decor = render_decoration(game);
+	let decor = render_decoration(game, false);
 
 	text = text.replaceAll("</span>", "</span><div>" + decor + "</div>");
 
@@ -264,7 +262,7 @@ function decorate_list_dd()
 		let text = outer_elm.innerHTML;
 
 		let game = parse_game_name(site, link_elm.href);
-		let decor = render_decoration(game);
+		let decor = render_decoration(game, false);
 
 		text = text.replaceAll("<div", "<span");
 		text = text.replaceAll("</div>", "</span>");
@@ -289,7 +287,7 @@ function decorate_item_uk()
 	let text = elm.innerHTML;
 
 	let game = parse_game_name(site, window.location.href);
-	let decor = render_decoration(game);
+	let decor = render_decoration(game, false);
 
   text += render_newline();
   text += "<span";
@@ -321,7 +319,7 @@ function decorate_list_uk()
     if (path[2].toLowerCase().includes("switch-download")) continue;
 
 		let game = parse_game_name(site, href);
-		let decor = render_decoration(game);
+		let decor = render_decoration(game, false);
 		let text = elm.innerHTML;
 
     text += render_newline();
@@ -351,7 +349,7 @@ function decorate_item_us()
 
 	let text = elm.innerHTML;
 	let game = parse_game_name(site, window.location.href);
-	let decor = render_decoration(game);
+	let decor = render_decoration(game, false);
 
   text += render_newline();
   text += "<span";
@@ -379,21 +377,18 @@ function decorate_list_us()
     if ((typeof href) == "undefined") continue;
 
   	let game = parse_game_name(site, href);
-		let decor = render_decoration(game);
+		let decor = render_decoration(game, true);
 		let text = elm.innerHTML;
 
     text += render_newline();
     text += "<div";
-    text += render_attr("id", game);
-    
     style = "font-size: 15px;"
-    //style += text-decoration: underline;";
-    style += "overflow: visible;"
-    style += "text-overflow: clip;"
+
+    style += "height: 100px;"
     style += "white-space: normal;"
-    style += "overflow-wrap: break-word;"
-    style += "position: absolute;"
-    
+    style += "text-overflow: clip;"
+    style += "overflow: hidden;"
+        
     text += render_attr("style", style);
     text += ">";
     text += decor;
@@ -409,9 +404,10 @@ function render_newline()
 	return "<br />";
 }
 
-function render_space() 
+function render_space(nonbreaking) 
 {
-	return "&nbsp;";
+  if (nonbreaking) return "&nbsp;"
+	return " ";
 }
 
 function render_attr(attr, value)
@@ -439,19 +435,19 @@ function render_link(url, title)
 	r += render_attr("target", "review");
 	r += ">" + title + "&raquo;</a>";
 
-  if (site == "uk" || site == "us") r += render_space();
+  if (site == "uk" || site == "us") r += render_space(false);
 
 	return r;
 }
 
-function render_decoration(game) 
+function render_decoration(game, break_between) 
 {
 	r = "";
 
-  if (site == "us" && page == "list") r += "<pre></pre>";
 	r += render_decor_taglist(game);
+  if (break_between && r != "") r += render_newline();
 	r += render_decor_google_search(game);
-	r += render_space();
+	r += render_space(true);
 	r += render_decor_youtube_search(game);
 
 	return r;
@@ -469,12 +465,10 @@ function render_decor_taglist(game)
 			if (tag == "") continue;
 			r += render_tag(tag);
 
-      if (site == "uk" || site == "us") r += render_space();
+      if (site == "uk" || site == "us") r += render_space(false);
 		}
 
 	}
-
-  if (r != "" && site == "us" && page == "list") r += "<pre></pre>";
 
 	return r;
 }
@@ -517,7 +511,7 @@ function render_tag(tag)
   tag = "#" + tag;
 
   if (site == "uk" || site == "us") {
-    tag = "&nbsp;" + tag + "&nbsp";
+    tag = render_space(true) + tag + render_space(true);
   }
 
 	r = "<span";
@@ -525,7 +519,7 @@ function render_tag(tag)
 	r += render_attr("style", style);
 	r += ">" + tag + "</span>";
 
-	return r + render_space();
+	return r + render_space(false);
 }
 
 
