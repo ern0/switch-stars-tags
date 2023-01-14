@@ -380,15 +380,14 @@ function decorate_list_us()
 		let decor = render_decoration(game, true);
 		let text = elm.innerHTML;
 
-    text += render_newline();
-    text += "<div";
     style = "font-size: 15px;"
-
     style += "height: 100px;"
     style += "white-space: normal;"
     style += "text-overflow: clip;"
     style += "overflow: hidden;"
         
+    text += render_newline();
+    text += "<div";
     text += render_attr("style", style);
     text += ">";
     text += decor;
