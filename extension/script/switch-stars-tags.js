@@ -376,6 +376,16 @@ function decorate_list_us()
     let href = link_elm.href;
     if ((typeof href) == "undefined") continue;
 
+    let cat_elm = elm.parentElement;
+    if (cat_elm == null) continue;
+    cat_elm = cat_elm.nextSibling;
+    if (cat_elm == null) continue;    
+    cat_elm = cat_elm.nextSibling;
+    if (cat_elm == null) continue;    
+    cat_elm = cat_elm.nextSibling;
+    if (cat_elm == null) continue;    
+    if (!cat_elm.textContent.toLowerCase().includes("switch")) continue;
+
   	let game = parse_game_name(site, href);
 		let decor = render_decoration(game, true);
 		let text = elm.innerHTML;
